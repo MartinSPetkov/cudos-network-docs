@@ -25,13 +25,13 @@ In order to have a secure and running network, you will need to run each of the 
 3. Seed node on a separate local machine
 4. Ethereum full node, you can run it virtually on a cloud
 
-As a validator, you must run an orchestrator. The orchestrator requires an Ethereum full node to connect to. If your Ethereum full node and the orchestrator are within a private network, you need to run the orchestrator on the same physical machine as the validator. Otherwise, If the network is public, you will need a separate machine for the orchestrator that must reside in the validator's private network. This will ensure that the validator machine is not making a public connection with any physical machine.
+As a Validator, you must run an orchestrator. The orchestrator requires an Ethereum full node to connect to. If your Ethereum full node and the orchestrator are within a private network, you need to run the orchestrator on the same physical machine as the Validator. Otherwise, if the network is public, you will need a separate machine for the orchestrator that must reside in the Validator's private network. This will ensure that the Validator machine is not making a public connection with any physical machine.
 
-For one or more validator nodes it is recommended to launch a layer of sentry nodes (at least 1 Sentry node) and optionally Seed nodes with isolating the validator node behind that layer.
+For one or more Validator nodes, it is recommended to launch a layer of Sentry nodes (at least 1 Sentry node) and optionally Seed nodes with isolating the Validator node behind that layer.
 
-You need an IP-address per node which is directly connected to the network. For example, If you have **N** validator nodes and only one Sentry node then only the Sentry node is directly connected to the network. In this case you will need a single IP-address.
+You need an IP address per node, which is directly connected to the network. For example, if you have **N** Validator nodes and only one Sentry node, only the Sentry node is directly connected to the network. In this case, you will need a single IP address.
 
-The picture below shows the diagram of validator topology:
+The picture below shows the diagram of Validator topology:
 
 ![img](./validator-topoligy.jpg)
 
@@ -48,11 +48,11 @@ To run a full node, you need to complete the following steps:
 - Initialize the node
 - Configure and start the node
 
-#### Initialize the Full node as a validator
+#### Initialize the Full node as a Validator
 
-When you run a validator node, you play an important role in the security of a network. A validator must be secure and fault-tolerant. So it is recommended to run your validator with a layer of 1 or more sentry nodes and to isolate the validator node behind that layer. Also, you will need an IP-address per node that is connected to the network. For example, if you have 10 validator nodes and only one Sentry node then only the Sentry node will be connected to the network where you will need a single IP-address.
+When you run a Validator node, you play an important role in the security of a network. A Validator must be secure and fault-tolerant. So it is recommended to run your Validator with a layer of 1 or more sentry nodes and isolate the Validator node behind that layer. Also, you will need an IP address per node that is connected to the network. For example, if you have 10 Validator nodes and only one Sentry node, only the Sentry node will be connected to the network where you will need a single IP address.
 
-In total, Cudos has [three types of nodes](/learn/validators.html#types-of-nodes) and as a validator, you need to have at least:
+In total, Cudos has [three types of nodes](/learn/validators.html#types-of-nodes) and as a Validator, you need to have at least:
 * one Sentry node
 * one Full node
 
@@ -263,9 +263,9 @@ Be aware not to exit the docker shell. You will need it for the next step that i
 
 ### Orchestrator
 
-The orchestrator is a program that runs on every validator node beside the Cudos code. The Gravity bridge enables token transfers from Ethereum to Cudos and back again. Validators running a chain with an installed Gravity module use the orchestrator's wallet to sign messages or transactions. During the process of creating an orchestrator, the validator signs a transaction that contains data about the orchestrator address of this validator. Therefore, the orchestrator uses the wallet to sign this data and all gravity-related transactions.
+The Orchestrator is a program that runs on every validator node beside the Cudos code. The Gravity bridge enables token transfers from Ethereum to Cudos and back again. Validators running a chain with an installed Gravity module use the Orchestrator's wallet to sign messages or transactions. While creating an Orchestrator, the validator signs a transaction that contains data about the Orchestrator address of this validator. Therefore, the Orchestrator uses the wallet to sign this data and all gravity-related transactions.
 
-The Orchestrator monitors the Ethereum chain, submitting events that occur on Ethereum to Cudos as messages. To send transactions from Cudos to Ethereum, the Gravity Bridge module first packages the transaction data and makes it available on an endpoint. The Orchestrator then signs this data with the validator’s Ethereum key, and submits it as a message. These signatures will then be assembled and submitted to the Ethereum chain. For more information, please read the [Gravity bridge design overview](https://github.com/althea-net/cosmos-gravity-bridge/blob/main/docs/design/overview.md).
+The Orchestrator monitors the Ethereum chain, submitting events that occur on Ethereum to Cudos as messages. To send transactions from Cudos to Ethereum, the Gravity Bridge module first packages the transaction data and makes it available on an endpoint. The Orchestrator then signs this data with the validator’s Ethereum key and submits it as a message. These signatures will then be assembled and submitted to the Ethereum chain. For more information, please read the [Gravity bridge design overview](https://github.com/althea-net/cosmos-gravity-bridge/blob/main/docs/design/overview.md).
 
 #### Get the validator address
 
@@ -277,9 +277,9 @@ cudos-noded q staking validators
 the resulting output looks similar to the picture below, you need to find your validator, you can refer to the moniker to find it, and copy its **operator_address**:
 ![](./Cosmos-orchestrator1.png)
 
-#### Add the orchestrator wallet
+#### Add the Orchestrator wallet
 
-Now you MUST [add another wallet](/build/account-setup.html#creating-a-keplr-wallet) to use for the orchestrator (do not use the same validator wallet) and make sure that **it has some CUDOS tokens**. You can achieve that by running the command:
+Now you MUST [add another wallet](/build/account-setup.html#creating-a-keplr-wallet) to use for the Orchestrator (do not use the same validator wallet) and make sure that **it has some CUDOS tokens**. You can achieve that by running the command:
 ```
 cudos-noded keys add orchestrator --recover --keyring-backend="os"
 ```
@@ -292,7 +292,7 @@ The resulting output looks similar to the picture below. You will need the addre
 
 ![](./Cosmos-orchestrator2.png)
 
-#### Register and run the orchestrator
+#### Register and run the Orchestrator
 
 1. Add the following variables:
 ```
@@ -300,12 +300,12 @@ export VALIDATOR_ADDRESS="<*operator_address* from above>"
 export ORCH_ADDRESS="<*address* from the previous step>"
 export ETH_ADDRESS="<eth address, starting with 0x, that have some ETH on rinkeby test network>"
 ```
-2. Register the orchestrator:
+2. Register the Orchestrator:
 ```
 cudos-noded tx gravity set-orchestrator-address $VALIDATOR_ADDRESS $ORCH_ADDRESS $ETH_ADDRESS --from validator --keyring-backend "os" --chain-id $CHAIN_ID
 ```
 
-Now let's run the orchestrator, please make sure to run your gravity bridge binary on the same machine that your validator node is running on.
+Now let's run the Orchestrator, please make sure to run your gravity bridge binary on the same machine that your validator node is running on.
 1. Open shell and navigate to the directory _CudosBuilders/docker/orchestrator_
 2. Create a copy of **orchestrator.env.example**
 3. Rename it to **orchestrator.client.testnet.public01.env**
@@ -320,7 +320,7 @@ CONTRACT_ADDR="0xb22F2A4c231e69703FC524Eb2E3eb7B83C316F42" # CONTRACT_ADDR must 
 COSMOS_ORCH_MNEMONIC="<mnemonic of your orchestrator account>"
 ETH_PRIV_KEY_HEX="<private key of your eth wallet that was used to register the validator>" # in hex format without leading 0x
 ```
-6. Finally run the orchestrator
+6. Finally run the Orchestrator
 ```
 sudo docker-compose --env-file orchestrator.client.testnet.public01.arg -f orchestrator.release.yml -p cudos-orchestrator-client-testnet-public-01-release up --build --detach
 ```
@@ -370,7 +370,7 @@ Note that The commands of sending funds takes up to few minutes to be executed.
 
 ## How to delete a current running node
 
-If you stop the docker container that is running a Full node then you are not able to use it. But if you want to remove the full node docker data then you need to clear the volume of full node docker, if you remove the folder it will remove all the data but make sure first that you stop the docker container.
+If you stop the docker container that is running a Full node then you are not able to use it. But if you want to remove the Full node docker data then you need to clear the volume of Full node docker, if you remove the folder it will remove all the data but make sure first that you stop the docker container.
 
 Clear the volume of full node docker:
 * Navigate and open the file **CudosBuilders/docker/full-node/full-node.client.testnet.public01.arg**
@@ -385,37 +385,37 @@ Navigate to the folder **CudosData**, you may find a folder known as **cudos-dat
 
 ## Secure your node
 
-Setting up a Cudos Node is the starting point for any user wanting to interact with, and play a greater part in, the network. In order to set up a Cudos node, users will require the use of Go/Golang version 1.15 or higher. On-premise or bare metal server providers such as OVH, Leaseweb, IBM, Alibaba, Amazon Web Services, Google Cloud Computing platform, or Microsoft Azure, can be used to generate Cudos nodes and join the Cudos Network.
+Setting up a Cudos Node is the starting point for any user wanting to interact with, and play a greater part in, the network. To set up a Cudos node, users will need Go/Golang version 1.15 or higher. On-premise or bare metal server providers such as OVH, Leaseweb, IBM, Alibaba, Amazon Web Services, Google Cloud Computing platform, or Microsoft Azure can be used to generate Cudos nodes and join the Cudos Network.
 
-Once the appropriate hardware and software requirements are met, users will then need to install the Cudos Network’s high-performance compute blockchain through version control systems such as Github or use the network’s release tags and build from source. The Cudos Network application is the application that defines the Cudos Network and its special purpose compute workflows.
+Once the appropriate hardware and software requirements are met, users will need to install the Cudos Network’s high-performance compute blockchain through version control systems such as Github or use the network’s release tags and build from source. The Cudos Network application is the application that defines the Cudos Network, and its special purpose compute workflows.
 
-This application consists of a Cudos Network daemon and command-line interface that, once deployed, runs a full-node version of the Cudos Network blockchain for users to interact with. This bespoke implementation supports innovations such as Inter-Blockchain Communication (IBC) protocol to guarantee high levels of reliability and cross-chain interactions inspired by the network’s computing capabilities. This Cudos Network blockchain additionally leverages the most vetted modules within the Cudos community such as staking, authentication, and governance logic. It also includes special blockchain components and developer toolchains linked to its unique set of high-performance compute use cases and development workflows.
+This application consists of a Cudos Network daemon and command-line interface that, once deployed, runs a full-node version of the Cudos Network blockchain for users to interact with. This bespoke implementation supports innovations such as Inter-Blockchain Communication (IBC) protocol to guarantee high levels of reliability and cross-chain interactions inspired by the network’s computing capabilities. This Cudos Network blockchain additionally leverages the most vetted modules within the Cudos community, such as staking, authentication, and governance logic. It also includes special blockchain components and developer toolchains linked to its unique set of high-performance compute use cases and development workflows.
 
 ### Recommendations for securing a Validator node
 
-Cudos Validating nodes are Cosmos SDK-specified full nodes. This allows for a heavier-duty set of transaction processing workflows and network-level security exchanges with other members of the network. When setting up a Cudos Network Validator node, Validators will have to decide whether they want to be fully responsible for Key Management or if they want to leverage third-party infrastructure to do so. The Cudos Network blockchain leverages the Tendermint Key Management System in order to ensure high availability access to signing keys as part of the Cudos Network’s block processing workflows. This additionally allows this blockchain to prevent double-signing events. In practice, this feature allows for the tamper-proof storage of Hardware Security Module (HSM) Validator keys, even if the host has been compromised. If choosing to implement an HSM, the Validator should review that HSM's documentation in conjunction with the Tendermint KMS requirements, to ensure suitable compatibility before finalising a choice about this part of the security architecture.
+Cudos Validating nodes are Cosmos SDK-specified full nodes. This allows for a heavier-duty set of transaction processing workflows and network-level security exchanges with other network members. When setting up a Cudos Network Validator node, Validators will have to decide whether they want to be fully responsible for Key Management or if they want to leverage third-party infrastructure to do so. The Cudos Network blockchain leverages the Tendermint Key Management System to ensure high availability access to signing keys as part of the Cudos Network’s block processing workflows. This helps the blockchain to prevent double-signing events. In practice, this feature allows for the tamper-proof storage of Hardware Security Module (HSM) Validator keys, even if the host has been compromised. If choosing to implement an HSM, the Validator should review that HSM's documentation in conjunction with the Tendermint KMS requirements to ensure suitable compatibility before finalising a choice about this part of the security architecture.
 
-An additional security and availability consideration is the use of one or more sentry nodes between a Validator node and the public internet. This mechanism is used to place a layer of separation between the security-sensitive Validator node, and would-be sources of attack.
+An additional security and availability consideration is using one or more Sentry nodes between a Validator node and the public internet. This mechanism is used to place a layer of separation between the security-sensitive Validator node and would-be attack sources.
 
-Such attack types can include things like traffic-volume-based distributed denial-of-service (DDoS) attacks, designed to starve the Validator of available bandwidth in servicing legitimate usage, as well as malformed/spam message attacks, intended to consume processing or storage resources on the Validator, or induce unintended behaviour.
+Such attack types can include things like traffic-volume-based distributed denial-of-service (DDoS) attacks, designed to starve the Validator of available bandwidth in servicing legitimate usage, as well as malformed/spam message attacks intended to consume processing or storage resources on the Validator or induce unintended behaviour.
 
-We currently recommend the use of one sentry node whose exterior faces the public internet, with its interior attached to a private internal network. The Validator node then is connected solely to the private internal network, therefore allowing the proxying of all requests to and from the Validator via the sentry. Additionally, we recommend that the sentry's internet connection is further protected by a provider-managed firewall and DDoS-mitigation service.
+We currently recommend using one Sentry node whose exterior faces the public internet, with its interior attached to a private internal network. The Validator node then is connected solely to the private internal network, allowing the proxying of all requests to and from the Validator via the sentry. Additionally, we recommend that a provider-managed firewall and DDoS-mitigation service further protect the sentry's internet connection.
 
 ![](./Security.png)
 
-As previously indicated in the node minimum hardware requirements, our favoured recommendation is to implement discrete physical servers for the Validator and sentry. Using that specification, the separation of public internet and private internal network may be achieved either through physically separated interfaces, or a VLAN-based configuration.
+As previously indicated in the node minimum hardware requirements, our favoured recommendation is to implement discrete physical servers for the Validator and sentry. With that specification, the separation of public internet and private internal networks may be achieved through physically separated interfaces or a VLAN-based configuration.
 
-It is technically possible to use a hypervisor on a single physical server, with system VMs for each of the Validator and sentry roles, and to use virtual networking to create the recommended security topology. We do not discourage this approach, but do strongly recommend a thorough understanding of the prospective security and performance considerations prior to implementation.
+It is technically possible to use a hypervisor on a single physical server, with system VMs for each Validator and Sentry role, and virtual networking to create the recommended security topology. We do not discourage this approach but strongly recommend a thorough understanding of the prospective security and performance considerations before implementation.
 
 An extension of the sentry node architecture optionally sees a Validator operator adding additional sentries. For those concerned about risks such as DDoS attacks consuming all bandwidth into the single recommended sentry, it is possible to add further sentries, optionally across multiple discrete geographies with independent internet connections. The private internal network for connection between sentries and the Validator would then need to be stretched out to these.
 
-Beyond the set up of a server, a node, an authenticated way of joining the Cudos blockchain using our in-built public key infrastructure, in coordination with Ledger HSM or YubiHSM for those Validators choosing to implement them, the use of full nodes when interacting the network is highly recommended. We plan to implement the ability for Cudos Validator Nodes to store a history of previously signed blocks in order to more seamlessly prevent double-signing by adverse or deficient nodes in the Cudos Network. This feature is currently absent in earlier-generation Tendermint blockchains. The final element keeping Cudos Network Validating nodes safe is the Tendermint Core Byzantine Fault Tolerant Proof of Stake consensus algorithm.
+Beyond the set up of a server, a node, an authenticated way of joining the Cudos blockchain using our in-built public key infrastructure, in coordination with Ledger HSM or YubiHSM for those Validators choosing to implement them, the use of full nodes when interacting the network is highly recommended. We plan to implement the ability for Cudos Validator nodes to store a history of previously signed blocks to more seamlessly prevent double-signing by adverse or deficient nodes in the Cudos Network. This feature is currently absent in earlier-generation Tendermint blockchains. The Tendermint Core Byzantine Fault Tolerant Proof of Stake consensus algorithm is the final element keeping Cudos Network Validator nodes safe.
 
 ## Hardware requirements
 
-The below hardware requirements are based upon extrapolating Cosmos minimums into our observations of an under-continuing-development testnet environment. Our ongoing performance and capacity monitoring may highlight needed changes as development continues, and so the requirements should be considered subject to revision.
+The hardware requirements below are based upon extrapolating Cosmos minimums into our observations of an under-continuing-development testnet environment. Our ongoing performance and capacity monitoring may highlight needed changes as development continues, and so the requirements should be considered subject to revision.
 
-Our requirements design does factor in additional room to grow, and considers the additional value-add features that the Cudos network will incorporate over and above a simple Tendermint-based network.
+Our requirements design does factor in an additional room to grow and considers the additional value-add features that the Cudos network will incorporate over and above a simple Tendermint-based network.
 
 ### Cudos mainnet ("Ingenii") Validator node
 
@@ -498,6 +498,6 @@ Our requirements design does factor in additional room to grow, and considers th
 * 100Mb/s internet connection or better
 * Linux Debian 10 recommended
 
-Note that while we only provide specifications for dedicated physical hardware nodes for each of mainnet and testnet, we do not discourage validator operators who choose to identify virtual equivalents.
+While we only provide specifications for dedicated physical hardware nodes for mainnet and testnet, we do not discourage Validator operators who choose to identify virtual equivalents.
 
-At this time, we do not provide detailed storage IOPS/throughput or network PPS/bandwidth minimums. As the testnet evolves, we will share our observations of real-world statistics, to hopefully assist virtualised environment operators with right-sizing their deployments.
+At this time, we do not provide detailed storage IOPS/throughput or network PPS/bandwidth minimums. As the testnet evolves, we will share our observations of real-world statistics to hopefully assist virtualised environment operators with right-sizing their deployments.
